@@ -6,22 +6,86 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
-
+using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using System.Runtime.CompilerServices;
+using System.Configuration;
 
 namespace ImageToASCII
 {
+
     internal class Program
     {
         static void Main(string[] args)
         {
-            string basePath = Environment.CurrentDirectory;
-            string relativePath = ".ImageToASCII/Images/AmongUs.png";
+            string path = "ImageToASCII\\bin\\Debug\\Images\\";
 
-            string fullPath = Path.GetFullPath(relativePath, basePath);
-            Console.WriteLine(fullPath);
-            Image image = Image.FromFile(fullPath);
+            Console.WriteLine("Put your image in the Images folder located at {0}", path);
+            Console.Write("Input the name of the image you want to convert: ");
+            string imageName = Console.ReadLine();
+
+            string relativePath = "Images\\" + imageName;
+            string fullPath = Path.GetFullPath(relativePath);
+
+            if (File.Exists(fullPath))
+            {
+                Console.WriteLine("YIPEE");
+                System.Drawing.Image imageFile = System.Drawing.Image.FromFile(fullPath);
+                Bitmap bitmap = new Bitmap(imageFile);
+
+                for (int h = 0; h < bitmap.Height; h++)
+                {
+                    for (int w = 0; w < bitmap.Width; w++)
+                    {
+                        Color colour = bitmap.GetPixel(w, h);
+
+                        colour = Color.FromArgb((colour.R + colour.G + colour.B) / 3, (colour.R + colour.G + colour.B) / 3, (colour.R + colour.G + colour.B) / 3);
+
+                        int greenValue = int.Parse(colour.G.ToString());
+                        GetGreyValue(greenValue);
+
+                    }
+                }
+
+
+            }
+            else
+            {
+                Console.WriteLine("Sobbing :(");
+            }
+
+
         }
 
+        static string GetGreyValue(int greenValue)
+        {
+            ASCIIConstants ascii = new ASCIIConstants();
+            string ASCIIValue = "";
+
+            if (greenValue > 200)
+            {
+                ASCIIValue = ;
+            }
+            else if (greenValue < 200)
+            {
+
+            }
+
+            return ASCIIValue;
+        }
+        public class ASCIIConstants
+        {
+            public const string White = " ";
+            const string LightGrey = "`";
+            const string LightMidGrey = ".";
+            const string LighterMidGrey = ",";
+            const string Grey = "*";
+            const string MidGrey = "!";
+            const string DarkerMidGrey = "+";
+            const string DarkGrey = "?";
+            const string Black = "%";
+
+        }
 
         #region [Testing]
         /*
@@ -63,4 +127,5 @@ namespace ImageToASCII
         */
         #endregion
     }
+
 }
