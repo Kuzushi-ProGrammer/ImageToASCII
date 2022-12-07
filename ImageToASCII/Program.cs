@@ -13,11 +13,11 @@ using System.Configuration;
 
 namespace ImageToASCII
 {
-
     internal class Program
     {
         static void Main(string[] args)
         {
+            StringBuilder stringBuilder = new StringBuilder(); 
             string path = "ImageToASCII\\bin\\Debug\\Images\\";
 
             Console.WriteLine("Put your image in the Images folder located at {0}", path);
@@ -41,51 +41,75 @@ namespace ImageToASCII
 
                         colour = Color.FromArgb((colour.R + colour.G + colour.B) / 3, (colour.R + colour.G + colour.B) / 3, (colour.R + colour.G + colour.B) / 3);
 
-                        int greenValue = int.Parse(colour.G.ToString());
-                        GetGreyValue(greenValue);
+                        int redValue = int.Parse(colour.R.ToString());
+
+                        stringBuilder.Append(GreyscalerToAscii(redValue));
 
                     }
                 }
-
-
             }
             else
             {
                 Console.WriteLine("Sobbing :(");
             }
-
-
         }
-
-        static string GetGreyValue(int greenValue)
+        static string GreyscalerToAscii(int value)
         {
-            ASCIIConstants ascii = new ASCIIConstants();
             string ASCIIValue = "";
 
-            if (greenValue > 200)
+            // using red works all the way up until #7f7f7f (midpoint)
+            // if red and one other colour max out, the remaining colour's magnitude determines the brightness
+            // ex. (255, 255, 10) would be lighter than (255, 0, 0)
+            if (value > 230)
             {
-                ASCIIValue = ;
+                ASCIIValue = ASCIIConstants.BLACK;
             }
-            else if (greenValue < 200)
+            else if (value > 200)
             {
-
+                ASCIIValue = ASCIIConstants.DARK_GREY;
+            }
+            else if (value > 170)
+            {
+                ASCIIValue = ASCIIConstants.DARKER_MID_GREY;
+            }
+            else if (value > 140)
+            {
+                ASCIIValue = ASCIIConstants.MID_GREY;
+            }
+            else if (value > 110)
+            {
+                ASCIIValue = ASCIIConstants.GREY;
+            }
+            else if (value > 80)
+            {
+                ASCIIValue = ASCIIConstants.LIGHT_MID_GREY;
+            }
+            else if (value > 50)
+            {
+                ASCIIValue = ASCIIConstants.LIGHTER_MID_GREY;
+            }
+            else if (value > 20)
+            {
+                ASCIIValue = ASCIIConstants.WHITE;
             }
 
             return ASCIIValue;
         }
-        public class ASCIIConstants
-        {
-            public const string White = " ";
-            const string LightGrey = "`";
-            const string LightMidGrey = ".";
-            const string LighterMidGrey = ",";
-            const string Grey = "*";
-            const string MidGrey = "!";
-            const string DarkerMidGrey = "+";
-            const string DarkGrey = "?";
-            const string Black = "%";
 
+        public static class ASCIIConstants
+        {
+            public const string WHITE = " ";
+            public const string LIGHT_GREY = "`";
+            public const string LIGHT_MID_GREY = ".";
+            public const string LIGHTER_MID_GREY = ",";
+            public const string GREY = "*";
+            public const string MID_GREY = "!";
+            public const string DARKER_MID_GREY = "+";
+            public const string DARK_GREY = "?";
+            public const string BLACK = "%";
         }
+
+
 
         #region [Testing]
         /*
