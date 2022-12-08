@@ -43,10 +43,16 @@ namespace ImageToASCII
 
                         int redValue = int.Parse(colour.R.ToString());
 
+                        //Console.WriteLine("{0}, {1}", w.ToString(), h);
+
+                        //Console.Write(GreyscalerToAscii(redValue));
                         stringBuilder.Append(GreyscalerToAscii(redValue));
 
                     }
+                    stringBuilder.Append("\n");
                 }
+
+                Console.Write(stringBuilder);
             }
             else
             {
@@ -55,58 +61,67 @@ namespace ImageToASCII
         }
         static string GreyscalerToAscii(int value)
         {
-            string ASCIIValue = "";
+            string ASCIIValue = " ";
 
             // using red works all the way up until #7f7f7f (midpoint)
             // if red and one other colour max out, the remaining colour's magnitude determines the brightness
             // ex. (255, 255, 10) would be lighter than (255, 0, 0)
             if (value > 230)
             {
-                ASCIIValue = ASCIIConstants.BLACK;
+                ASCIIValue = ASCIIConstants.WHITE;
             }
-            else if (value > 200)
-            {
-                ASCIIValue = ASCIIConstants.DARK_GREY;
-            }
-            else if (value > 170)
-            {
-                ASCIIValue = ASCIIConstants.DARKER_MID_GREY;
-            }
-            else if (value > 140)
-            {
-                ASCIIValue = ASCIIConstants.MID_GREY;
-            }
-            else if (value > 110)
-            {
-                ASCIIValue = ASCIIConstants.GREY;
-            }
-            else if (value > 80)
-            {
-                ASCIIValue = ASCIIConstants.LIGHT_MID_GREY;
-            }
-            else if (value > 50)
+            else if (value > 205)
             {
                 ASCIIValue = ASCIIConstants.LIGHTER_MID_GREY;
             }
-            else if (value > 20)
+            else if (value > 180)
             {
-                ASCIIValue = ASCIIConstants.WHITE;
+                ASCIIValue = ASCIIConstants.LIGHT_MID_GREY;
             }
-
+            else if (value > 155)
+            {
+                ASCIIValue = ASCIIConstants.LIGHT_GREY;
+            }
+            else if (value > 130)
+            {
+                ASCIIValue = ASCIIConstants.GREY;
+            }
+            else if (value > 105)
+            {
+                ASCIIValue = ASCIIConstants.MID_GREY;
+            }
+            else if (value > 80)
+            {
+                ASCIIValue = ASCIIConstants.DARKER_MID_GREY;
+            }
+            else if (value > 55)
+            {
+                ASCIIValue = ASCIIConstants.DARK_GREY;
+            }
+            else if (value > 30)
+            {
+                ASCIIValue = ASCIIConstants.DARKER_THAN_DARK_GREY;
+            }
+            else if (value < 30)
+            {
+                ASCIIValue = ASCIIConstants.BLACK;
+            }
+            //Console.WriteLine(ASCIIValue);
             return ASCIIValue;
         }
 
         public static class ASCIIConstants
         {
-            public const string WHITE = " ";
-            public const string LIGHT_GREY = "`";
-            public const string LIGHT_MID_GREY = ".";
-            public const string LIGHTER_MID_GREY = ",";
-            public const string GREY = "*";
-            public const string MID_GREY = "!";
-            public const string DARKER_MID_GREY = "+";
-            public const string DARK_GREY = "?";
-            public const string BLACK = "%";
+            public const string WHITE = " "; // " "
+            public const string LIGHTER_MID_GREY = "s"; // ","
+            public const string LIGHT_MID_GREY = "o"; // "."
+            public const string LIGHT_GREY = "u"; // "`"
+            public const string GREY = "n"; // "*"
+            public const string MID_GREY = "g"; // "!"
+            public const string DARKER_MID_GREY = "N"; // "+"
+            public const string DARK_GREY = "O"; // "?"
+            public const string DARKER_THAN_DARK_GREY = "M";
+            public const string BLACK = "A"; // "%"
         }
 
 

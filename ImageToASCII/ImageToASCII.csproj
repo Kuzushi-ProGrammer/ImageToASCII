@@ -58,6 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\Images\AmongUs.jpg" />
+    <Content Include="bin\Debug\Images\Cat.png" />
+    <Content Include="bin\Debug\Images\Heart.png" />
+    <Content Include="bin\Debug\Images\MiniMogus.png" />
+    <Content Include="bin\Debug\Images\SmallMongUs.png" />
+    <Content Include="bin\Debug\Images\TestGradient.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
